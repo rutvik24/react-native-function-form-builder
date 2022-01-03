@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, useColorScheme, View} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import FormGenerator from './src/Fields/FormGenerator';
 import SwitchField from './src/Fields/Switch/Index';
 import TextInputField from './src/Fields/TextInput/Index';
 
@@ -22,23 +23,35 @@ const App = () => {
     keyboardType: 'email',
   };
 
-  const attribute = {
-    icon: 'email',
-    textInputIconColor: 'black',
-    label: 'password',
-    keyboardType: 'email',
-    secureTextEntry: password,
-    eyeIcon: 'email',
-    eyePress: () => {
-      showPassword();
+  const attribute = [
+    {
+      key: 'TextInput',
+      icon: 'email',
+      textInputIconColor: 'black',
+      label: 'email',
+      numberOfLines: 3,
+      placeholderColor: 'blue',
+      keyboardType: 'email',
     },
-  };
-
-  const attribut = {
-    label: 'male',
-    trackColor: {true: 'red', false: 'green'},
-    thumbColor: 'green',
-  };
+    {
+      icon: 'email',
+      textInputIconColor: 'black',
+      label: 'password',
+      key: 'TextInput',
+      keyboardType: 'email',
+      secureTextEntry: password,
+      eyeIcon: 'email',
+      eyePress: () => {
+        showPassword();
+      },
+    },
+    {
+      label: 'male',
+      trackColor: {true: 'red', false: 'green'},
+      thumbColor: 'green',
+      key: 'Switch',
+    },
+  ];
 
   const showPassword = () => {
     setPassword(!password);
@@ -47,9 +60,7 @@ const App = () => {
   return (
     <SafeAreaView style={backgroundStyle}>
       <View>
-        <TextInputField attributes={attributes} />
-        <TextInputField attributes={attribute} />
-        <SwitchField attributes={attribut} />
+        <FormGenerator attributes={attribute} />
       </View>
     </SafeAreaView>
   );
