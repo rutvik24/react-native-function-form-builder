@@ -20,7 +20,7 @@ const DatePickerField = props => {
         </TouchableOpacity>
       </View>
       <DatePicker
-        modal={(modal && modal) || false}
+        modal
         date={date}
         open={open}
         onConfirm={date => {
