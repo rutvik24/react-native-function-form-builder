@@ -7,7 +7,7 @@ import {simpleDate} from '../../Utils/Constant';
 const DatePickerField = props => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-  const {modal, confirmText, cancelText, dateText} = props.attributes;
+  const {confirmText, cancelText, dateText} = props.attributes;
 
   const newDate = moment(date).format(simpleDate);
 
