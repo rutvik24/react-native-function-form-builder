@@ -20,13 +20,15 @@ const SwitchField = attributes => {
           marginLeft: 15,
         },
       ]}>
-      <Text style={textStyle && textStyle}>{label}</Text>
+      <Text style={[textStyle && textStyle, {fontSize: 15}]}>{label}</Text>
       <Switch
         value={isEnabled}
         onValueChange={() => {
           setIsEnabled(!isEnabled);
         }}
-        trackColor={trackColor && trackColor || {true: '#1E4EDD', false: '#C8C8C8'}}
+        trackColor={
+          (trackColor && trackColor) || {true: '#1E4EDD', false: '#C8C8C8'}
+        }
         thumbColor={(thumbColor && thumbColor) || '#CCC1C1'}
       />
     </View>

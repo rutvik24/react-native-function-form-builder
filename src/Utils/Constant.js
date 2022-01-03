@@ -1,0 +1,12 @@
+export const timeFormat = 'h:mm A';
+export const dateFormat = 'ddd, MMMM DD - h:mm A';
+export const simpleDate = 'YYYY-MM-DD';
+export const eventFormat = 'yyyy-MM-DDTHH:mm:ss.SSS';
+export const titleFormat = 'ddd, MMMM DD, YYYY h:mm A';
+export const date = 'MMMM DD, YYYY';
+export const headerDate = 'MMMM Do, YYYY';
+export const dbDate = 'MM/DD/YYYYY HH:mm';
+export const formateDateDB = 'YYYY-MM-DD HH:mm';
+export const startDBDate = 'ddd, MMMM DD';
+export const endDBDate = 'ddd, MMMM DD, YYYY';
+export const ticketFormat = 'dddd, MMMM DD, YYYY';

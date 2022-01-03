@@ -10,16 +10,6 @@ const App = () => {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
-  const attributes = {
-    icon: 'email',
-    textInputIconColor: 'black',
-    label: 'email',
-    numberOfLines: 3,
-    placeholderColor: 'blue',
-    keyboardType: 'email',
-  };
-
   const attribute = [
     {
       key: 'TextInput',
@@ -29,6 +19,7 @@ const App = () => {
       numberOfLines: 3,
       placeholderColor: 'blue',
       keyboardType: 'email',
+      type: 'email',
     },
     {
       icon: 'email',
@@ -47,6 +38,14 @@ const App = () => {
       trackColor: {true: 'red', false: 'green'},
       thumbColor: 'green',
       key: 'Switch',
+    },
+    {
+      key: 'Date',
+      label: 'Date',
+      modal: true,
+      confirmText: 'ok',
+      cancelText: 'cancel',
+      dateText: 'BirthDay',
     },
   ];
 

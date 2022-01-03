@@ -20,17 +20,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const TextInputField = attributes => {
+const TextInputField = props => {
   const {inputIcon} = styles;
-  const inputProps = attributes.props;
   const refName = useRef(null);
-  const keyboardType = getKeyboardType(attributes.type);
+  const keyboardType = getKeyboardType(type);
   const [text, setText] = useState('');
   const {
     icon,
     border,
     textInputIconColor,
-    direction,
+    iconDirection,
     error,
     errorIconColor,
     style,
@@ -42,7 +41,8 @@ const TextInputField = attributes => {
     eyeIcon,
     eyePress,
     inputWidth,
-  } = attributes?.attributes;
+    type,
+  } = props?.attributes;
 
   const width = Dimensions.get('window').width;
 
@@ -53,7 +53,7 @@ const TextInputField = attributes => {
   return (
     <View
       style={[
-        {flexDirection: 'row',marginHorizontal: 5, marginTop: 10},
+        {flexDirection: 'row', marginHorizontal: 5, marginTop: 10},
         border && border,
       ]}>
       {icon && (
@@ -62,14 +62,14 @@ const TextInputField = attributes => {
             {
               tintColor: textInputIconColor,
               justifyContent:
-                (direction === 'end' && 'flex-end') || 'flex-start',
+                (iconDirection === 'end' && 'flex-end') || 'flex-start',
             },
             inputIcon,
           ]}
           source={{uri: icon}}
         />
       )}
-      {direction === 'end' && error ? (
+      {iconDirection === 'end' && error ? (
         <Image
           style={[
             {
@@ -84,10 +84,6 @@ const TextInputField = attributes => {
       <TextInput
         style={[
           {
-            height:
-              inputProps &&
-              inputProps.multiline &&
-              (Platform.OS === 'ios' ? undefined : null),
             padding: 5,
             width:
               (eyeIcon && inputWidth && inputWidth * 0.73) ||
@@ -110,9 +106,8 @@ const TextInputField = attributes => {
         value={text}
         keyboardType={keyboardType}
         onChangeText={text => handleChangeText(text)}
-        {...inputProps}
       />
-      {direction !== 'end' && error ? (
+      {iconDirection !== 'end' && error ? (
         <Image
           style={[{tintColor: errorIconColor, marginHorizontal: 5}, inputIcon]}
           source={{uri: error}}
