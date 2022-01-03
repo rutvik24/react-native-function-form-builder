@@ -9,7 +9,6 @@ const DatePickerField = props => {
   const [open, setOpen] = useState(false);
   const {modal, confirmText, cancelText, dateText} = props.attributes;
 
-  //   const newDate = JSON.stringify(date).substring(1, 25);
   const newDate = moment(date).format(simpleDate);
 
   return (
