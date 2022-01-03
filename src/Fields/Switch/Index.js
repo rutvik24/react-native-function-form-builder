@@ -5,9 +5,7 @@ const SwitchField = attributes => {
   const {label, textStyle, trackColor, thumbColor} = attributes?.attributes;
   const [isEnabled, setIsEnabled] = useState(false);
 
-  const enabled = () => {
-    return isEnabled;
-  };
+  console.log(isEnabled);
 
   return (
     <View
@@ -27,13 +25,8 @@ const SwitchField = attributes => {
         value={isEnabled}
         onValueChange={() => {
           setIsEnabled(!isEnabled);
-          enabled();
         }}
-        trackColor={value => {
-          return (
-            (trackColor && trackColor) || (value && '#1E4EDD') || '#C8C8C8'
-          );
-        }}
+        trackColor={trackColor && trackColor || {true: '#1E4EDD', false: '#C8C8C8'}}
         thumbColor={(thumbColor && thumbColor) || '#CCC1C1'}
       />
     </View>

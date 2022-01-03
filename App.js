@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, useColorScheme, View} from 'react-native';
 
@@ -44,13 +36,9 @@ const App = () => {
 
   const attribut = {
     label: 'male',
-    trackColor: value => {
-      console.log(value);
-      return value;
-    },
+    trackColor: {true: 'red', false: 'green'},
+    thumbColor: 'green',
   };
-
-  console.log(attribut.trackColor);
 
   const showPassword = () => {
     setPassword(!password);

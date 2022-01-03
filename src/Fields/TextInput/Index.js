@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     width: 25,
     alignSelf: 'center',
     margin: 10,
-    resizeMode: 'center',
+    resizeMode: 'contain',
   },
 });
 
@@ -53,7 +53,7 @@ const TextInputField = attributes => {
   return (
     <View
       style={[
-        {flexDirection: 'row', marginHorizontal: 10, marginTop: 10},
+        {flexDirection: 'row',marginHorizontal: 5, marginTop: 10},
         border && border,
       ]}>
       {icon && (
