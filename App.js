@@ -2,10 +2,7 @@ import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, useColorScheme, View} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import FormGenerator from './src/Fields/FormGenerator';
-import SwitchField from './src/Fields/Switch/Index';
-import TextInputField from './src/Fields/TextInput/Index';
-
+import FormGenerator from './src/FormBuilder/Index';
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const [password, setPassword] = useState(true);

@@ -1,8 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {keyExtractor} from 'react-native/Libraries/Lists/VirtualizeUtils';
-import SwitchField from './Switch/Index';
-import TextInputField from './TextInput/Index';
+import TextInputField from '../Fields/TextInput/Index';
+import SwitchField from '../Fields/Switch/Index';
 
 const FormGenerator = props => {
   const {attributes} = props;
