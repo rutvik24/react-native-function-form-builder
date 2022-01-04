@@ -42,9 +42,7 @@ const App = () => {
     {
       key: 'Date',
       label: 'Date',
-      modal: true,
-      confirmText: 'ok',
-      cancelText: 'cancel',
+      pickerMode: 'date',
       dateText: 'BirthDay',
     },
   ];

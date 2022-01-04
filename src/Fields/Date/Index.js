@@ -1,15 +1,20 @@
 import React, {useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Platform, Text, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
-import DatePicker from 'react-native-date-picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {simpleDate} from '../../Utils/Constant';
 
 const DatePickerField = props => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-  const {confirmText, cancelText, dateText} = props.attributes;
+  const {dateText, pickerMode, minimumDate, maximumDate} = props.attributes;
 
   const newDate = moment(date).format(simpleDate);
+
+  const handleConfirm = dateTime => {
+    setDate(dateTime);
+    setOpen(false);
+  };
 
   return (
     <View style={{marginVertical: 10, marginHorizontal: 15}}>
@@ -19,20 +24,22 @@ const DatePickerField = props => {
           <Text style={{fontSize: 15}}>{newDate}</Text>
         </TouchableOpacity>
       </View>
-      <DatePicker
-        modal
-        date={date}
-        open={open}
-        onConfirm={date => {
-          setOpen(false);
-          setDate(date);
-        }}
-        onCancel={() => {
-          setOpen(false);
-        }}
-        confirmText={(confirmText && confirmText) || 'Confirm'}
-        cancelText={(cancelText && cancelText) || 'Cancel'}
-      />
+      {open && (
+        <DateTimePickerModal
+          isVisible={open}
+          mode={pickerMode}
+          onConfirm={handleConfirm}
+          onCancel={() => {
+            setOpen(false);
+          }}
+          onChange={dateTime => {
+            setDate(dateTime);
+          }}
+          display={(Platform.OS === 'ios' && 'inline') || 'default'}
+          minimumDate={minimumDate}
+          maximumDate={maximumDate}
+        />
+      )}
     </View>
   );
 };
