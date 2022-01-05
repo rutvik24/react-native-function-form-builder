@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import TextInputField from '../Fields/TextInput/Index';
 import SwitchField from '../Fields/Switch/Index';
 import {DatePickerField} from '../Fields/Date/Index';
+import {SelectField} from '../Fields/Select/Index';
 
 const FormGenerator = props => {
   const {attributes} = props;
@@ -15,6 +16,8 @@ const FormGenerator = props => {
         return <SwitchField attributes={field} />;
       case 'Date':
         return <DatePickerField attributes={field} />;
+      case 'Select':
+        return <SelectField attributes={field} />;
     }
   };
 

@@ -45,6 +45,19 @@ const App = () => {
       pickerMode: 'date',
       dateText: 'BirthDay',
     },
+    {
+      label: 'Colors',
+      key: 'Select',
+      items: [
+        {label: 'Blue', value: 'Blue'},
+        {label: 'Black', value: 'Black'},
+        {label: 'White', value: 'White'},
+        {label: 'Red', value: 'Red'},
+      ],
+      multiple: true,
+      customChecked: 'checked',
+      customUnChecked: 'unchecked',
+    },
   ];
 
   const showPassword = () => {
