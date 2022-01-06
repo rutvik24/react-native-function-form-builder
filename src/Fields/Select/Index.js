@@ -13,13 +13,9 @@ const SelectField = props => {
     label,
   } = props?.attributes;
   const [open, setOpen] = useState(false);
-  const [checked, setChecked] = useState(false);
   const [selectedItem, setSelectedItem] = useState([]);
 
-  console.log('selectedItem', selectedItem);
-
   const handleConfirm = item => {
-    console.log(item);
     setOpen(false);
   };
 
@@ -29,21 +25,22 @@ const SelectField = props => {
 
   const itemPress = obj => {
     if (multiple) {
-      setChecked(!checked);
-      if (selectedItem.indexOf(obj) !== -1) {
-        const items = selectedItem?.filter(i => {
-          i.value !== obj.value;
-        });
-        setSelectedItem(items);
+      const index = selectedItem.indexOf(obj);
+      if (index !== -1) {
+        let x = selectedItem;
+        x.splice(index, 1);
+        console.log('x', x);
+        setSelectedItem(x);
       } else {
         setSelectedItem([...selectedItem, obj]);
       }
     } else {
       setSelectedItem(obj.value);
-      console.log(selectedItem);
       setOpen(false);
     }
   };
+
+  console.log('sel', selectedItem);
 
   return (
     <View
@@ -68,7 +65,8 @@ const SelectField = props => {
         handleConfirm={handleConfirm}
         handleCancel={handleCancel}
         itemPress={itemPress}
-        checked={checked}
+        // checked={checked}
+        selectedItem={selectedItem}
       />
     </View>
   );

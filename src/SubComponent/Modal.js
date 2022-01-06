@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Modal,
@@ -15,7 +15,6 @@ const SelectModal = props => {
     customUnChecked,
     item,
     visible,
-    selectItem,
     multiple,
     confirmText,
     cancelText,
@@ -24,63 +23,94 @@ const SelectModal = props => {
     handleConfirm,
     itemPress,
     checked,
+    selectedItem,
   } = props;
 
   const renderItem = ({item}) => {
-    // if (selectItem.includes(obj?.item?.value)) {
-    //   setChecked(true);
+    // let checked = false;
+    // if (selectedItem.indexOf(item) === -1) {
+    //   checked = false;
     // } else {
-    //   setChecked(false);
+    //   checked = true;
     // }
-
-    console.log(multiple);
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View
+        style={{
+          borderTopWidth: 0.5,
+          borderTopColor: 'gray',
+          borderBottomColor: 'gray',
+          borderEndWidth: 0.5,
+          margin: 5,
+        }}>
         <TouchableOpacity
           onPress={() => {
             itemPress(item);
-          }}>
+          }}
+          style={{flexDirection: 'row'}}>
           {(multiple && (
             <Image
               source={{
                 uri: (checked && 'checked') || 'unchecked',
               }}
+              style={{
+                height: 25,
+                width: 25,
+                margin: 5,
+              }}
             />
           )) ||
             null}
-          <Text>{item?.label}</Text>
+          <Text style={{fontSize: 18, margin: 5}}>{item?.label}</Text>
         </TouchableOpacity>
       </View>
     );
   };
 
   return (
-    <View
-      style={{justifyContent: 'center', alignSelf: 'center', marginTop: 200}}>
+    <View>
       <Modal
         visible={visible}
         onRequestClose={onRequestClose}
-        animationType="slide">
+        animationType="slide"
+        transparent={true}>
         <SafeAreaView>
-          <FlatList
-            data={item}
-            keyExtractor={item => item.value}
-            renderItem={renderItem}
-          />
-          {(multiple && (
-            <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
-              <TouchableOpacity
-                onPress={() => {
-                  handleConfirm(selectedItem);
-                }}>
-                <Text>{(confirmText && confirmText) || 'confirm'}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleCancel}>
-                <Text>{(cancelText && cancelText) || 'cancel'}</Text>
-              </TouchableOpacity>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              margin: 50,
+              backgroundColor: 'white',
+            }}>
+            <View style={{height: '60%', width: '80%'}}>
+              <FlatList
+                data={item}
+                keyExtractor={item => item.value}
+                renderItem={renderItem}
+              />
             </View>
-          )) ||
-            null}
+            {(multiple && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignSelf: 'flex-end',
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    handleConfirm(selectedItem);
+                  }}>
+                  <Text style={{marginVertical: 10, marginRight: 10}}>
+                    {(confirmText && confirmText) || 'confirm'}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleCancel}>
+                  <Text style={{marginVertical: 10, marginRight: 10}}>
+                    {(cancelText && cancelText) || 'cancel'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )) ||
+              null}
+          </View>
         </SafeAreaView>
       </Modal>
     </View>
