@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Modal,
@@ -22,17 +22,19 @@ const SelectModal = props => {
     handleCancel,
     handleConfirm,
     itemPress,
-    checked,
     selectedItem,
   } = props;
 
   const renderItem = ({item}) => {
-    // let checked = false;
-    // if (selectedItem.indexOf(item) === -1) {
-    //   checked = false;
-    // } else {
-    //   checked = true;
-    // }
+    let checked = false;
+    if (selectedItem.indexOf(item) === -1) {
+      checked = false;
+    } else {
+      checked = true;
+    }
+    const checkedImage = (customChecked && customChecked) || 'checked';
+    const unCheckedImage = (customUnChecked && customUnChecked) || 'unchecked';
+
     return (
       <View
         style={{
@@ -50,7 +52,7 @@ const SelectModal = props => {
           {(multiple && (
             <Image
               source={{
-                uri: (checked && 'checked') || 'unchecked',
+                uri: (checked && checkedImage) || unCheckedImage,
               }}
               style={{
                 height: 25,

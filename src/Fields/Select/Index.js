@@ -14,12 +14,15 @@ const SelectField = props => {
   } = props?.attributes;
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState([]);
+  const [result, setResult] = useState([]);
 
   const handleConfirm = item => {
+    setResult(item);
     setOpen(false);
   };
 
   const handleCancel = () => {
+    setSelectedItem(result);
     setOpen(false);
   };
 
@@ -27,33 +30,36 @@ const SelectField = props => {
     if (multiple) {
       const index = selectedItem.indexOf(obj);
       if (index !== -1) {
-        let x = selectedItem;
+        let x = [...selectedItem];
         x.splice(index, 1);
-        console.log('x', x);
         setSelectedItem(x);
       } else {
         setSelectedItem([...selectedItem, obj]);
       }
     } else {
-      setSelectedItem(obj.value);
+      setResult(obj.value);
       setOpen(false);
     }
   };
 
-  console.log('sel', selectedItem);
+  console.log(typeof result);
+
+  const val = (typeof result === 'string' && result) || result.length;
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 15,
-        marginVertical: 10,
-      }}>
-      <TouchableOpacity onPress={() => setOpen(true)}>
+    <View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginHorizontal: 15,
+          marginVertical: 10,
+        }}>
         <Text>{label}</Text>
-      </TouchableOpacity>
-      <Text>{'Blue'}</Text>
+        <TouchableOpacity onPress={() => setOpen(true)}>
+          <Text>{(result.length && val) || 'None'}</Text>
+        </TouchableOpacity>
+      </View>
       <SelectModal
         item={items}
         visible={open}
@@ -62,10 +68,11 @@ const SelectField = props => {
         multiple={(multiple && multiple) || false}
         confirmText={confirmText && confirmText}
         cancelText={cancelText && cancelText}
-        handleConfirm={handleConfirm}
+        handleConfirm={() => {
+          handleConfirm(selectedItem);
+        }}
         handleCancel={handleCancel}
         itemPress={itemPress}
-        // checked={checked}
         selectedItem={selectedItem}
       />
     </View>

@@ -55,8 +55,18 @@ const App = () => {
         {label: 'Red', value: 'Red'},
       ],
       multiple: true,
-      customChecked: 'checked',
-      customUnChecked: 'unchecked',
+      customChecked: 'email',
+      customUnChecked: 'checked',
+    },
+    {
+      key: 'Email',
+      icon: 'email',
+      textInputIconColor: 'black',
+      label: 'emai',
+      numberOfLines: 3,
+      placeholderColor: 'blue',
+      keyboardType: 'email',
+      type: 'email',
     },
   ];
 

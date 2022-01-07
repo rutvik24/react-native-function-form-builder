@@ -18,6 +18,8 @@ const FormGenerator = props => {
         return <DatePickerField attributes={field} />;
       case 'Select':
         return <SelectField attributes={field} />;
+      case 'Email':
+        return <TextInputField attributes={field} />;
     }
   };
 
