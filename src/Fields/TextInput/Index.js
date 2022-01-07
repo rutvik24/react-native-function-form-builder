@@ -22,12 +22,10 @@ const styles = StyleSheet.create({
 
 const TextInputField = props => {
   const {inputIcon} = styles;
-  const refName = useRef(null);
   const keyboardType = getKeyboardType(type);
-  const [text, setText] = useState('');
   const {
     icon,
-    border,
+    containerStyle,
     textInputIconColor,
     iconDirection,
     error,
@@ -42,19 +40,20 @@ const TextInputField = props => {
     eyePress,
     inputWidth,
     type,
+    value,
+    ref,
+    onSubmitEditing,
   } = props?.attributes;
+  const {onChangeText} = props;
+  const [text, setText] = useState(value);
 
   const width = Dimensions.get('window').width;
-
-  const handleChangeText = text => {
-    setText(text);
-  };
 
   return (
     <View
       style={[
         {flexDirection: 'row', marginHorizontal: 5, marginTop: 10},
-        border && border,
+        containerStyle && containerStyle,
       ]}>
       {icon && (
         <Image
@@ -93,7 +92,7 @@ const TextInputField = props => {
           },
           style && style,
         ]}
-        ref={refName}
+        ref={ref}
         underlineColorAndroid={'transparent'}
         numberOfLines={numberOfLines && numberOfLines}
         secureTextEntry={secureTextEntry}
@@ -105,7 +104,11 @@ const TextInputField = props => {
         editable={editable}
         value={text}
         keyboardType={keyboardType}
-        onChangeText={text => handleChangeText(text)}
+        onChangeText={text => {
+          onChangeText(text);
+          setText(text);
+        }}
+        onSubmitEditing={onSubmitEditing}
       />
       {iconDirection !== 'end' && error ? (
         <Image

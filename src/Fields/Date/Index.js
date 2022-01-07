@@ -7,7 +7,17 @@ import {simpleDate} from '../../Utils/Constant';
 const DatePickerField = props => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-  const {dateText, pickerMode, minimumDate, maximumDate} = props.attributes;
+  const {
+    dateText,
+    pickerMode,
+    minimumDate,
+    maximumDate,
+    containerStyle,
+    DateModalStyle,
+    labelStyle,
+    dateStyle,
+  } = props?.attributes;
+  const {onChange} = props;
 
   const newDate = moment(date).format(simpleDate);
 
@@ -18,10 +28,18 @@ const DatePickerField = props => {
 
   return (
     <View style={{marginVertical: 10, marginHorizontal: 15}}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={{fontSize: 15}}>{dateText}</Text>
+      <View
+        style={[
+          {flexDirection: 'row', justifyContent: 'space-between'},
+          containerStyle && containerStyle,
+        ]}>
+        <Text style={[{fontSize: 15}, labelStyle && labelStyle]}>
+          {dateText}
+        </Text>
         <TouchableOpacity onPress={() => setOpen(true)}>
-          <Text style={{fontSize: 15}}>{newDate}</Text>
+          <Text style={[{fontSize: 15}, dateStyle && dateStyle]}>
+            {newDate}
+          </Text>
         </TouchableOpacity>
       </View>
       {open && (
@@ -34,10 +52,12 @@ const DatePickerField = props => {
           }}
           onChange={dateTime => {
             setDate(dateTime);
+            onChange(dateTime);
           }}
           display={(Platform.OS === 'ios' && 'inline') || 'default'}
           minimumDate={minimumDate}
           maximumDate={maximumDate}
+          style={DateModalStyle && DateModalStyle}
         />
       )}
     </View>

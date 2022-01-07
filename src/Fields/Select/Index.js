@@ -11,7 +11,16 @@ const SelectField = props => {
     confirmText,
     cancelText,
     label,
+    containerStyle,
+    onRequestClose,
+    cancelStyle,
+    confirmStyle,
+    modalContainerStyle,
+    listContainerStyle,
+    labelStyle,
+    resultStyle,
   } = props?.attributes;
+  const {onChange} = props;
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState([]);
   const [result, setResult] = useState([]);
@@ -19,6 +28,7 @@ const SelectField = props => {
   const handleConfirm = item => {
     setResult(item);
     setOpen(false);
+    onChange(item);
   };
 
   const handleCancel = () => {
@@ -39,25 +49,29 @@ const SelectField = props => {
     } else {
       setResult(obj.value);
       setOpen(false);
+      onChange(obj.value);
     }
   };
-
-  console.log(typeof result);
 
   const val = (typeof result === 'string' && result) || result.length;
 
   return (
     <View>
       <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginHorizontal: 15,
-          marginVertical: 10,
-        }}>
-        <Text>{label}</Text>
+        style={[
+          {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginHorizontal: 15,
+            marginVertical: 10,
+          },
+          containerStyle && containerStyle,
+        ]}>
+        <Text style={labelStyle && labelStyle}>{label}</Text>
         <TouchableOpacity onPress={() => setOpen(true)}>
-          <Text>{(result.length && val) || 'None'}</Text>
+          <Text style={resultStyle && resultStyle}>
+            {(result.length && val) || 'None'}
+          </Text>
         </TouchableOpacity>
       </View>
       <SelectModal
@@ -74,6 +88,14 @@ const SelectField = props => {
         handleCancel={handleCancel}
         itemPress={itemPress}
         selectedItem={selectedItem}
+        onRequestClose={() => {
+          onRequestClose();
+          setOpen(false);
+        }}
+        cancelStyle={cancelStyle}
+        confirmStyle={confirmStyle}
+        modalContainerStyle={modalContainerStyle}
+        listContainerStyle={listContainerStyle}
       />
     </View>
   );

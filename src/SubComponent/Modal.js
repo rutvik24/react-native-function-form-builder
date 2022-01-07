@@ -23,6 +23,10 @@ const SelectModal = props => {
     handleConfirm,
     itemPress,
     selectedItem,
+    cancelStyle,
+    confirmStyle,
+    modalContainerStyle,
+    listContainerStyle,
   } = props;
 
   const renderItem = ({item}) => {
@@ -37,13 +41,16 @@ const SelectModal = props => {
 
     return (
       <View
-        style={{
-          borderTopWidth: 0.5,
-          borderTopColor: 'gray',
-          borderBottomColor: 'gray',
-          borderEndWidth: 0.5,
-          margin: 5,
-        }}>
+        style={[
+          {
+            borderTopWidth: 0.5,
+            borderTopColor: 'gray',
+            borderBottomColor: 'gray',
+            borderEndWidth: 0.5,
+            margin: 5,
+          },
+          listContainerStyle && listContainerStyle,
+        ]}>
         <TouchableOpacity
           onPress={() => {
             itemPress(item);
@@ -77,12 +84,15 @@ const SelectModal = props => {
         transparent={true}>
         <SafeAreaView>
           <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              margin: 50,
-              backgroundColor: 'white',
-            }}>
+            style={[
+              {
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: 50,
+                backgroundColor: 'white',
+              },
+              modalContainerStyle && modalContainerStyle,
+            ]}>
             <View style={{height: '60%', width: '80%'}}>
               <FlatList
                 data={item}
@@ -96,17 +106,25 @@ const SelectModal = props => {
                   flexDirection: 'row',
                   alignSelf: 'flex-end',
                 }}>
+                <TouchableOpacity onPress={handleCancel}>
+                  <Text
+                    style={[
+                      {marginVertical: 10, marginRight: 10},
+                      cancelStyle && cancelStyle,
+                    ]}>
+                    {(cancelText && cancelText) || 'cancel'}
+                  </Text>
+                </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
                     handleConfirm(selectedItem);
                   }}>
-                  <Text style={{marginVertical: 10, marginRight: 10}}>
+                  <Text
+                    style={[
+                      {marginVertical: 10, marginRight: 10},
+                      confirmStyle && confirmStyle,
+                    ]}>
                     {(confirmText && confirmText) || 'confirm'}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleCancel}>
-                  <Text style={{marginVertical: 10, marginRight: 10}}>
-                    {(cancelText && cancelText) || 'cancel'}
                   </Text>
                 </TouchableOpacity>
               </View>

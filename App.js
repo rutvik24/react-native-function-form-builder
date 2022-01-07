@@ -1,15 +1,12 @@
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, useColorScheme, View} from 'react-native';
-
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import React, {useRef, useState} from 'react';
+import {SafeAreaView, View} from 'react-native';
 import FormGenerator from './src/FormBuilder/Index';
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
   const [password, setPassword] = useState(true);
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const reg =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  let emailRef = useRef(null);
+  let passwordRef = useRef(null);
   const attribute = [
     {
       key: 'TextInput',
@@ -20,6 +17,12 @@ const App = () => {
       placeholderColor: 'blue',
       keyboardType: 'email',
       type: 'email',
+      value: '',
+      regex: reg,
+      ref: emailRef,
+      onSubmitEditing: () => {
+        passwordRef.current.focus();
+      },
     },
     {
       icon: 'email',
@@ -28,16 +31,19 @@ const App = () => {
       key: 'TextInput',
       keyboardType: 'email',
       secureTextEntry: password,
-      eyeIcon: 'email',
+      eyeIcon: (password && 'unchecked') || 'checked',
       eyePress: () => {
         showPassword();
       },
+      value: '',
+      ref: passwordRef,
     },
     {
       label: 'male',
       trackColor: {true: 'red', false: 'green'},
       thumbColor: 'green',
       key: 'Switch',
+      value: false,
     },
     {
       key: 'Date',
@@ -57,16 +63,7 @@ const App = () => {
       multiple: true,
       customChecked: 'email',
       customUnChecked: 'checked',
-    },
-    {
-      key: 'Email',
-      icon: 'email',
-      textInputIconColor: 'black',
-      label: 'emai',
-      numberOfLines: 3,
-      placeholderColor: 'blue',
-      keyboardType: 'email',
-      type: 'email',
+      value: [],
     },
   ];
 
@@ -74,32 +71,25 @@ const App = () => {
     setPassword(!password);
   };
 
+  const onSubmitPress = item => {
+    console.log(item);
+  };
+
+  const validation = item => {
+    console.log('validation', item);
+  };
+
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView>
       <View>
-        <FormGenerator attributes={attribute} />
+        <FormGenerator
+          attributes={attribute}
+          onSubmitPress={onSubmitPress}
+          validation={validation}
+        />
       </View>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;
