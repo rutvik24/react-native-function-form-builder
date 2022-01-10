@@ -52,8 +52,6 @@ const TextInputField = props => {
 
   const width = Dimensions.get('window').width;
 
-  console.log('text', error);
-
   return (
     <View>
       <View
@@ -100,6 +98,7 @@ const TextInputField = props => {
           ]}
           ref={ref}
           underlineColorAndroid={'transparent'}
+          multiline={(numberOfLines > 1 && true) || false}
           numberOfLines={numberOfLines && numberOfLines}
           secureTextEntry={secureTextEntry}
           placeholder={label}
@@ -135,7 +134,7 @@ const TextInputField = props => {
         )) ||
           null}
       </View>
-      {error && (
+      {(error && (
         <Text
           style={[
             {marginHorizontal: 15, color: 'red'},
@@ -143,7 +142,8 @@ const TextInputField = props => {
           ]}>
           {(errorText && errorText) || 'This field is required'}
         </Text>
-      )}
+      )) ||
+        null}
     </View>
   );
 };

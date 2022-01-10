@@ -18,8 +18,10 @@ const SelectField = props => {
     listContainerStyle,
     labelStyle,
     resultStyle,
+    errorText,
+    errorTextStyle,
   } = props?.attributes;
-  const {onChange} = props;
+  const {onChange, error} = props;
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState([]);
   const [result, setResult] = useState([]);
@@ -73,6 +75,16 @@ const SelectField = props => {
           </Text>
         </TouchableOpacity>
       </View>
+      {(error && (
+        <Text
+          style={[
+            {marginHorizontal: 15, color: 'red'},
+            errorTextStyle && errorTextStyle,
+          ]}>
+          {(errorText && errorText) || 'This field is required'}
+        </Text>
+      )) ||
+        null}
       <SelectModal
         item={items}
         visible={open}

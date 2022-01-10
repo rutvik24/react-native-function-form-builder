@@ -20,30 +20,6 @@ const FormGenerator = props => {
   const [er, setEr] = useState(error);
 
   const renderField = field => {
-    // const handleValidation = () => {
-    //   if (field.isRequired) {
-    //     if (
-    //       result[field.label] === undefined ||
-    //       result[field.label].length === 0
-    //     ) {
-    //       if (field.ref) {
-    //         field.ref.current.focus();
-    //       }
-    //       return field.label + 'is required';
-    //     } else if (field.regex) {
-    //       if (
-    //         field.regex.test(result[attributes[i].label]) === false &&
-    //         field.ref
-    //       ) {
-    //         field.ref.current.focus();
-    //       }
-    //       return field.regex.test(result[attributes[i].label]);
-    //     }
-    //   }
-    // };
-
-    console.log('switch', er);
-
     switch (field?.key) {
       case 'TextInput':
         if (!result[field.label]) {
@@ -77,6 +53,7 @@ const FormGenerator = props => {
             onValueChange={value => {
               result[field.label] = value || false;
             }}
+            error={er[field.label]}
           />
         );
       case 'Date':
@@ -93,6 +70,7 @@ const FormGenerator = props => {
             onChange={date => {
               result[field.label] = date || '';
             }}
+            // error={er[field.label]}
           />
         );
       case 'Select':
@@ -109,6 +87,7 @@ const FormGenerator = props => {
             onChange={item => {
               result[field.label] = item || [];
             }}
+            error={er[field.label]}
           />
         );
     }

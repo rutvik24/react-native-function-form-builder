@@ -16,8 +16,10 @@ const DatePickerField = props => {
     DateModalStyle,
     labelStyle,
     dateStyle,
+    errorTextStyle,
+    errorText,
   } = props?.attributes;
-  const {onChange} = props;
+  const {onChange, error} = props;
 
   const newDate = moment(date).format(simpleDate);
 
@@ -42,6 +44,12 @@ const DatePickerField = props => {
           </Text>
         </TouchableOpacity>
       </View>
+      {(error && (
+        <Text style={[{color: 'red'}, errorTextStyle && errorTextStyle]}>
+          {(errorText && errorText) || 'This field is required'}
+        </Text>
+      )) ||
+        null}
       {open && (
         <DateTimePickerModal
           isVisible={open}

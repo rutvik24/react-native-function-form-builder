@@ -13,7 +13,7 @@ const App = () => {
       icon: 'email',
       textInputIconColor: 'black',
       label: 'email',
-      numberOfLines: 3,
+      numberOfLines: 1,
       placeholderColor: 'blue',
       keyboardType: 'email',
       type: 'email',
@@ -24,6 +24,7 @@ const App = () => {
         passwordRef.current.focus();
       },
       isRequired: true,
+      errorText: 'Email is Invalid',
     },
     {
       icon: 'email',
@@ -53,7 +54,6 @@ const App = () => {
       label: 'Date',
       pickerMode: 'date',
       dateText: 'BirthDay',
-      isRequired: true,
     },
     {
       label: "Color's",
