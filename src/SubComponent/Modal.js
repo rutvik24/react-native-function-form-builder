@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   View,
   Modal,
@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
-  SafeAreaView,
 } from 'react-native';
 
 const SelectModal = props => {
@@ -27,6 +26,7 @@ const SelectModal = props => {
     confirmStyle,
     modalContainerStyle,
     listContainerStyle,
+    label,
   } = props;
 
   const renderItem = ({item}) => {
@@ -43,10 +43,6 @@ const SelectModal = props => {
       <View
         style={[
           {
-            borderTopWidth: 0.5,
-            borderTopColor: 'gray',
-            borderBottomColor: 'gray',
-            borderEndWidth: 0.5,
             margin: 5,
           },
           listContainerStyle && listContainerStyle,
@@ -76,64 +72,102 @@ const SelectModal = props => {
   };
 
   return (
-    <View>
-      <Modal
-        visible={visible}
-        onRequestClose={onRequestClose}
-        animationType="slide"
-        transparent={true}>
-        <SafeAreaView>
+    <Modal
+      visible={visible}
+      onRequestClose={onRequestClose}
+      animationType="slide"
+      transparent={true}>
+      <View
+        style={[
+          {
+            alignItems: 'center',
+            backgroundColor: '#FFFFFF7F',
+            flex: 1,
+          },
+          modalContainerStyle && modalContainerStyle,
+        ]}>
+        <View
+          style={{
+            flex: 1,
+            width: '100%',
+            marginTop: 50,
+            marginBottom: -5,
+            marginVertical: 10,
+            padding: 25,
+            borderTopRightRadius: 30,
+            borderTopLeftRadius: 30,
+            backgroundColor: '#F5F5F5',
+            elevation: 10,
+          }}>
           <View
-            style={[
-              {
-                justifyContent: 'center',
-                alignItems: 'center',
-                margin: 50,
-                backgroundColor: 'white',
-              },
-              modalContainerStyle && modalContainerStyle,
-            ]}>
-            <View style={{height: '60%', width: '80%'}}>
-              <FlatList
-                data={item}
-                keyExtractor={item => item.value}
-                renderItem={renderItem}
-              />
-            </View>
-            {(multiple && (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignSelf: 'flex-end',
-                }}>
-                <TouchableOpacity onPress={handleCancel}>
-                  <Text
-                    style={[
-                      {marginVertical: 10, marginRight: 10},
-                      cancelStyle && cancelStyle,
-                    ]}>
-                    {(cancelText && cancelText) || 'cancel'}
-                  </Text>
-                </TouchableOpacity>
+            style={{
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderBottomWidth: 0.5,
+              paddingBottom: 5,
+            }}>
+            <Text style={{marginLeft: 10, fontWeight: '800', fontSize: 22}}>
+              {label}
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+              }}>
+              <TouchableOpacity onPress={handleCancel}>
+                <Text
+                  style={[
+                    {
+                      marginVertical: 10,
+                      marginRight: 10,
+                      color: 'white',
+                      borderRadius: 10,
+                      borderWidth: 0.5,
+                      paddingVertical: 6,
+                      paddingHorizontal: 10,
+                      backgroundColor: '#303134',
+                    },
+                    cancelStyle && cancelStyle,
+                  ]}>
+                  {(cancelText && cancelText) || 'CANCEL'}
+                </Text>
+              </TouchableOpacity>
+              {(multiple && (
                 <TouchableOpacity
                   onPress={() => {
                     handleConfirm(selectedItem);
                   }}>
                   <Text
                     style={[
-                      {marginVertical: 10, marginRight: 10},
+                      {
+                        marginVertical: 10,
+                        marginRight: 10,
+                        color: 'white',
+                        borderRadius: 10,
+                        borderWidth: 0.5,
+                        paddingVertical: 6,
+                        backgroundColor: '#303134',
+                        paddingHorizontal: 10,
+                      },
                       confirmStyle && confirmStyle,
                     ]}>
-                    {(confirmText && confirmText) || 'confirm'}
+                    {(confirmText && confirmText) || 'CONFIRM'}
                   </Text>
                 </TouchableOpacity>
-              </View>
-            )) ||
-              null}
+              )) ||
+                null}
+            </View>
           </View>
-        </SafeAreaView>
-      </Modal>
-    </View>
+          <View style={{flex: 1, marginTop: 20}}>
+            <FlatList
+              data={item}
+              keyExtractor={item => item.value}
+              renderItem={renderItem}
+            />
+          </View>
+        </View>
+      </View>
+    </Modal>
   );
 };
 

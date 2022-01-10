@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import TextInputField from '../Fields/TextInput/Index';
 import SwitchField from '../Fields/Switch/Index';
@@ -13,14 +13,46 @@ const FormGenerator = props => {
     submitStyle,
     submitTextStyle,
     style,
-    validation,
   } = props;
   let result = {};
   let ref = useRef(null);
+  let error = {};
+  const [er, setEr] = useState(error);
 
   const renderField = field => {
+    // const handleValidation = () => {
+    //   if (field.isRequired) {
+    //     if (
+    //       result[field.label] === undefined ||
+    //       result[field.label].length === 0
+    //     ) {
+    //       if (field.ref) {
+    //         field.ref.current.focus();
+    //       }
+    //       return field.label + 'is required';
+    //     } else if (field.regex) {
+    //       if (
+    //         field.regex.test(result[attributes[i].label]) === false &&
+    //         field.ref
+    //       ) {
+    //         field.ref.current.focus();
+    //       }
+    //       return field.regex.test(result[attributes[i].label]);
+    //     }
+    //   }
+    // };
+
+    console.log('switch', er);
+
     switch (field?.key) {
       case 'TextInput':
+        if (!result[field.label]) {
+          if (field.value) {
+            result[field.label] = field.value;
+          } else {
+            result[field.label] = '';
+          }
+        }
         return (
           <TextInputField
             attributes={field}
@@ -28,9 +60,17 @@ const FormGenerator = props => {
               result[field.label] = text || '';
             }}
             ref={ref[field.label]}
+            error={er[field.label]}
           />
         );
       case 'Switch':
+        if (!result[field.label]) {
+          if (field.value) {
+            result[field.label] = field.value;
+          } else {
+            result[field.label] = false;
+          }
+        }
         return (
           <SwitchField
             attributes={field}
@@ -40,6 +80,13 @@ const FormGenerator = props => {
           />
         );
       case 'Date':
+        if (!result[field.label]) {
+          if (field.value) {
+            result[field.label] = field.value;
+          } else {
+            result[field.label] = '';
+          }
+        }
         return (
           <DatePickerField
             attributes={field}
@@ -49,6 +96,13 @@ const FormGenerator = props => {
           />
         );
       case 'Select':
+        if (!result[field.label]) {
+          if (field.value) {
+            result[field.label] = field.value;
+          } else {
+            result[field.label] = '';
+          }
+        }
         return (
           <SelectField
             attributes={field}
@@ -62,26 +116,29 @@ const FormGenerator = props => {
 
   const handleValidation = () => {
     for (var i = 0; i < attributes.length; i++) {
-      if (
-        result[attributes[i].label] === undefined ||
-        result[attributes[i].label].length === 0
-      ) {
-        if (attributes[i].regex) {
+      if (attributes[i].isRequired === true) {
+        if (
+          result[attributes[i].label] === undefined ||
+          result[attributes[i].label].length === 0
+        ) {
+          if (attributes[i].ref) {
+            attributes[i].ref.current.focus();
+          }
+          error[attributes[i].label] = true;
+        } else if (attributes[i].regex) {
           if (
             attributes[i].regex.test(result[attributes[i].label]) === false &&
             attributes[i].ref
           ) {
             attributes[i].ref.current.focus();
+            error[attributes[i].label] = true;
+          } else {
+            error[attributes[i].label] = false;
           }
-          return attributes[i].regex.test(result[attributes[i].label]);
-        } else {
-          if (attributes[i].ref) {
-            attributes[i].ref.current.focus();
-          }
-          return attributes[i].label + ' is required';
         }
       }
     }
+    setEr(error);
   };
 
   return (
@@ -107,7 +164,7 @@ const FormGenerator = props => {
           <TouchableOpacity
             onPress={() => {
               onSubmitPress(result);
-              validation(handleValidation());
+              handleValidation();
             }}>
             <Text
               style={[

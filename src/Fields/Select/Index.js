@@ -12,7 +12,6 @@ const SelectField = props => {
     cancelText,
     label,
     containerStyle,
-    onRequestClose,
     cancelStyle,
     confirmStyle,
     modalContainerStyle,
@@ -89,13 +88,13 @@ const SelectField = props => {
         itemPress={itemPress}
         selectedItem={selectedItem}
         onRequestClose={() => {
-          onRequestClose();
           setOpen(false);
         }}
         cancelStyle={cancelStyle}
         confirmStyle={confirmStyle}
         modalContainerStyle={modalContainerStyle}
         listContainerStyle={listContainerStyle}
+        label={label}
       />
     </View>
   );

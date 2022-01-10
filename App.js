@@ -23,6 +23,7 @@ const App = () => {
       onSubmitEditing: () => {
         passwordRef.current.focus();
       },
+      isRequired: true,
     },
     {
       icon: 'email',
@@ -37,6 +38,7 @@ const App = () => {
       },
       value: '',
       ref: passwordRef,
+      isRequired: true,
     },
     {
       label: 'male',
@@ -44,15 +46,17 @@ const App = () => {
       thumbColor: 'green',
       key: 'Switch',
       value: false,
+      isRequired: true,
     },
     {
       key: 'Date',
       label: 'Date',
       pickerMode: 'date',
       dateText: 'BirthDay',
+      isRequired: true,
     },
     {
-      label: 'Colors',
+      label: "Color's",
       key: 'Select',
       items: [
         {label: 'Blue', value: 'Blue'},
@@ -61,9 +65,10 @@ const App = () => {
         {label: 'Red', value: 'Red'},
       ],
       multiple: true,
-      customChecked: 'email',
-      customUnChecked: 'checked',
+      customChecked: 'checked',
+      customUnChecked: 'unchecked',
       value: [],
+      isRequired: true,
     },
   ];
 
@@ -75,18 +80,10 @@ const App = () => {
     console.log(item);
   };
 
-  const validation = item => {
-    console.log('validation', item);
-  };
-
   return (
     <SafeAreaView>
       <View>
-        <FormGenerator
-          attributes={attribute}
-          onSubmitPress={onSubmitPress}
-          validation={validation}
-        />
+        <FormGenerator attributes={attribute} onSubmitPress={onSubmitPress} />
       </View>
     </SafeAreaView>
   );
