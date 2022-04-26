@@ -1,9 +1,8 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
   TextInput,
-  Platform,
   Dimensions,
   Image,
   TouchableOpacity,
@@ -93,6 +92,7 @@ const TextInputField = props => {
                 width * 0.73 ||
                 (inputWidth && inputWidth * 0.85) ||
                 width * 0.85,
+              borderBottomWidth: 0.5,
             },
             style && style,
           ]}

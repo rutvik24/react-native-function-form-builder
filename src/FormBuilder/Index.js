@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import TextInputField from '../Fields/TextInput/Index';
 import SwitchField from '../Fields/Switch/Index';
@@ -13,6 +13,7 @@ const FormGenerator = props => {
     submitStyle,
     submitTextStyle,
     style,
+    title,
   } = props;
   let result = {};
   let ref = useRef(null);
@@ -122,6 +123,15 @@ const FormGenerator = props => {
 
   return (
     <View>
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: 24,
+          fontWeight: '800',
+          color: 'black',
+        }}>
+        {title}
+      </Text>
       {attributes.map(field => {
         return (
           <View key={field?.label} style={style && style}>

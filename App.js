@@ -14,7 +14,6 @@ const App = () => {
       textInputIconColor: 'black',
       label: 'email',
       numberOfLines: 1,
-      placeholderColor: 'blue',
       keyboardType: 'email',
       type: 'email',
       value: '',
@@ -47,7 +46,6 @@ const App = () => {
       thumbColor: 'green',
       key: 'Switch',
       value: false,
-      isRequired: true,
     },
     {
       key: 'Date',
@@ -83,7 +81,11 @@ const App = () => {
   return (
     <SafeAreaView>
       <View>
-        <FormGenerator attributes={attribute} onSubmitPress={onSubmitPress} />
+        <FormGenerator
+          attributes={attribute}
+          onSubmitPress={onSubmitPress}
+          title={'Demo Form'}
+        />
       </View>
     </SafeAreaView>
   );
